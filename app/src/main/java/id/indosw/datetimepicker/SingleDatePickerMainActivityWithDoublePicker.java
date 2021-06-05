@@ -4,24 +4,22 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import id.indosw.datetimepicker.lib.SingleDateAndTimePicker;
-import id.indosw.datetimepicker.lib.dialog.DoubleDateAndTimePickerDialog;
-import id.indosw.datetimepicker.lib.dialog.SingleDateAndTimePickerDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import id.indosw.datetimepicker.lib.SingleDateAndTimePicker;
+import id.indosw.datetimepicker.lib.dialog.DoubleDateAndTimePickerDialog;
+import id.indosw.datetimepicker.lib.dialog.SingleDateAndTimePickerDialog;
 import james.crasher.Crasher;
 
 @SuppressLint("NonConstantResourceId")
