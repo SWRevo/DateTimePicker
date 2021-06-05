@@ -16,6 +16,7 @@ public class DateWithLabel {
         }
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public String toString() {
         return label;

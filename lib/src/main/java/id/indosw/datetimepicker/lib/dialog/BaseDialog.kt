@@ -1,94 +1,69 @@
-package id.indosw.datetimepicker.lib.dialog;
+package id.indosw.datetimepicker.lib.dialog
 
-import android.graphics.Color;
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.graphics.Color
+import androidx.annotation.ColorInt
+import id.indosw.datetimepicker.lib.widget.SingleDateAndTimeConstants
+import java.text.SimpleDateFormat
+import java.util.*
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+abstract class BaseDialog {
+    private var isDisplaying = false
 
-import static id.indosw.datetimepicker.lib.widget.SingleDateAndTimeConstants.STEP_MINUTES_DEFAULT;
-
-/**
- * Created by nor on 1/2/2017.
- */
-
-public abstract class BaseDialog {
-    public static final int DEFAULT_ITEM_COUNT_MODE_CURVED = 7;
-    public static final int DEFAULT_ITEM_COUNT_MODE_NORMAL = 5;
-
-    private boolean isDisplaying;
-
-    @Nullable
     @ColorInt
-    protected Integer backgroundColor = Color.WHITE;
+    protected var backgroundColor: Int = Color.WHITE
 
-    @Nullable
     @ColorInt
-    protected Integer mainColor = Color.BLUE;
+    protected var mainColor: Int = Color.BLUE
 
-    @Nullable
     @ColorInt
-    protected Integer titleTextColor = null;
-
-    protected boolean okClicked = false;
-    protected boolean curved = false;
-    protected boolean mustBeOnFuture = false;
-    protected int minutesStep = STEP_MINUTES_DEFAULT;
-
-    @Nullable
-    protected Date minDate;
-    @Nullable
-    protected Date maxDate;
-    @Nullable
-    protected Date defaultDate;
-
-    protected boolean displayDays;
-    protected boolean displayMinutes;
-    protected boolean displayHours;
-    protected boolean displayDaysOfMonth;
-    protected boolean displayMonth;
-    protected boolean displayYears;
-    protected boolean displayMonthNumbers;
-
-    @Nullable
-    protected Boolean isAmPm;
-
-    protected SimpleDateFormat dayFormatter;
-
-    protected Locale customLocale;
-
-    public void display() {
-        this.isDisplaying = true;
+    protected var titleTextColor: Int? = null
+    protected var okClicked = false
+    protected var curved = false
+    protected var mustBeOnFuture = false
+    protected var minutesStep = SingleDateAndTimeConstants.STEP_MINUTES_DEFAULT
+    protected var minDate: Date? = null
+    protected var maxDate: Date? = null
+    protected var defaultDate: Date? = null
+    protected var displayDays = false
+    protected var displayMinutes = false
+    protected var displayHours = false
+    protected var displayDaysOfMonth = false
+    protected var displayMonth = false
+    protected var displayYears = false
+    protected var displayMonthNumbers = false
+    protected var isAmPm: Boolean? = null
+    protected var dayFormatter: SimpleDateFormat? = null
+    protected var customLocale: Locale? = null
+    open fun display() {
+        isDisplaying = true
     }
 
-    public void close() {
-        this.isDisplaying = false;
+    open fun close() {
+        isDisplaying = false
     }
 
-    public void dismiss() {
-        this.isDisplaying = false;
+    open fun dismiss() {
+        isDisplaying = false
     }
 
-    public boolean isDisplaying() {
-        return isDisplaying;
+    fun setBackgroundColor(@ColorInt backgroundColor: Int?) {
+        this.backgroundColor = backgroundColor!!
     }
 
-    public void setBackgroundColor(@ColorInt Integer backgroundColor) {
-        this.backgroundColor = backgroundColor;
+    fun setMainColor(@ColorInt mainColor: Int?) {
+        this.mainColor = mainColor!!
     }
 
-    public void setMainColor(@ColorInt Integer mainColor) {
-        this.mainColor = mainColor;
+    fun setTitleTextColor(@ColorInt titleTextColor: Int) {
+        this.titleTextColor = titleTextColor
     }
 
-    public void setTitleTextColor(@NonNull @ColorInt int titleTextColor) {
-        this.titleTextColor = titleTextColor;
+    protected open fun onClose() {
+        isDisplaying = false
     }
 
-    protected void onClose() {
-        this.isDisplaying = false;
+    companion object {
+        const val DEFAULT_ITEM_COUNT_MODE_CURVED = 7
+        const val DEFAULT_ITEM_COUNT_MODE_NORMAL = 5
     }
 }
