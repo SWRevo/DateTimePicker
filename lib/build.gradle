@@ -5,7 +5,7 @@ plugins {
 ext {
     PUBLISH_GROUP_ID    = 'id.indosw'
     PUBLISH_ARTIFACT_ID = 'datetimepicker'
-    PUBLISH_VERSION     = '1.1.0'
+    PUBLISH_VERSION     = '1.2.0'
 }
 
 android {
@@ -16,7 +16,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
-        versionName "1.1.0"
+        versionName "1.2.0"
         consumerProguardFiles "consumer-rules.pro"
     }
 

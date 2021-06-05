@@ -27,8 +27,8 @@ class SingleDateAndTimePicker @JvmOverloads constructor(context: Context, attrs:
     private val listeners: MutableList<OnDateChangedListener> = ArrayList()
     private val dtSelector: View
     private var mustBeOnFuture = false
-    private lateinit var minDate: Date
-    private lateinit var maxDate: Date
+    private var minDate: Date? = null
+    private var maxDate: Date? = null
     private var defaultDate: Date
     private var displayYears = false
     private var displayMonth = false
@@ -256,7 +256,7 @@ class SingleDateAndTimePicker @JvmOverloads constructor(context: Context, attrs:
         }
     }
 
-    fun getMinDate(): Date {
+    fun getMinDate(): Date? {
         return minDate
     }
 
@@ -268,7 +268,7 @@ class SingleDateAndTimePicker @JvmOverloads constructor(context: Context, attrs:
         setMinYear()
     }
 
-    fun getMaxDate(): Date {
+    fun getMaxDate(): Date? {
         return maxDate
     }
 
@@ -296,7 +296,7 @@ class SingleDateAndTimePicker @JvmOverloads constructor(context: Context, attrs:
         picker.postDelayed({
             if (isBeforeMinDate(date)) {
                 for (p in pickers) {
-                    p.scrollTo(p.findIndexOfDate(minDate))
+                    p.scrollTo(p.findIndexOfDate(minDate!!))
                 }
             }
         }, DELAY_BEFORE_CHECK_PAST.toLong())
@@ -306,18 +306,18 @@ class SingleDateAndTimePicker @JvmOverloads constructor(context: Context, attrs:
         picker.postDelayed({
             if (isAfterMaxDate(date)) {
                 for (p in pickers) {
-                    p.scrollTo(p.findIndexOfDate(maxDate))
+                    p.scrollTo(p.findIndexOfDate(maxDate!!))
                 }
             }
         }, DELAY_BEFORE_CHECK_PAST.toLong())
     }
 
     private fun isBeforeMinDate(date: Date): Boolean {
-        return dateHelper.getCalendarOfDate(date).before(dateHelper.getCalendarOfDate(minDate))
+        return dateHelper.getCalendarOfDate(date).before(dateHelper.getCalendarOfDate(minDate!!))
     }
 
     private fun isAfterMaxDate(date: Date): Boolean {
-        return dateHelper.getCalendarOfDate(date).after(dateHelper.getCalendarOfDate(maxDate))
+        return dateHelper.getCalendarOfDate(date).after(dateHelper.getCalendarOfDate(maxDate!!))
     }
 
     fun addOnDateChangedListener(listener: OnDateChangedListener) {
@@ -444,9 +444,9 @@ class SingleDateAndTimePicker @JvmOverloads constructor(context: Context, attrs:
         if (displayYears) {
             val calendar = Calendar.getInstance()
             calendar.timeZone = dateHelper.timeZone
-            calendar.time = minDate
+            calendar.time = minDate!!
             yearsPicker.setMinYear(calendar[Calendar.YEAR])
-            calendar.time = maxDate
+            calendar.time = maxDate!!
             yearsPicker.setMaxYear(calendar[Calendar.YEAR])
         }
     }

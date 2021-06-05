@@ -18,6 +18,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
+            android:background="@color/picker_background"
             android:layout_height="50dp"
             >
 
@@ -31,7 +32,7 @@
                 android:layout_marginLeft="12dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:text="title here"
-                android:textColor="@color/picker_button_background_selected"
+                android:textColor="@android:color/white"
                 android:textStyle="bold"
                 />
 
@@ -46,7 +47,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:text="@android:string/ok"
                 android:textAllCaps="true"
-                android:textColor="@color/picker_button_background_selected"
+                android:textColor="@android:color/white"
                 android:textStyle="bold"
                 />
 
