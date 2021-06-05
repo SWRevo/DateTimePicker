@@ -1,90 +1,86 @@
-package id.indosw.datetimepicker.lib;
+package id.indosw.datetimepicker.lib
 
-import androidx.annotation.NonNull;
+import java.util.*
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-
-public class DateHelper {
+class DateHelper {
     // Don't use static, as timezone may change while app is alive
-    private TimeZone timeZone = TimeZone.getDefault();
+    var timeZone: TimeZone = TimeZone.getDefault()
 
-    public DateHelper() {
-        this.timeZone = TimeZone.getDefault();
+    constructor() {
+        timeZone = TimeZone.getDefault()
     }
 
-    public DateHelper(TimeZone timeZone) {
-        this.timeZone = timeZone;
+    constructor(timeZone: TimeZone) {
+        this.timeZone = timeZone
     }
 
-    public void setTimeZone(TimeZone timeZoneValue) {
-        timeZone = timeZoneValue;
+    @JvmName("setTimeZone1")
+    fun setTimeZone(timeZoneValue: TimeZone) {
+        timeZone = timeZoneValue
     }
 
-    @NonNull
-    public TimeZone getTimeZone() {
-        if(this.timeZone == null) {
-            return TimeZone.getDefault();
+    @JvmName("getTimeZone1")
+    fun getTimeZone(): TimeZone {
+        return timeZone
+    }
+
+    fun getCalendarOfDate(date: Date): Calendar {
+        val calendar = Calendar.getInstance(getTimeZone())
+        calendar.time = date
+        calendar[Calendar.MILLISECOND] = 0
+        calendar[Calendar.SECOND] = 0
+        return calendar
+    }
+
+    private fun getHour(date: Date): Int {
+        return getCalendarOfDate(date)[Calendar.HOUR]
+    }
+
+    private fun getHourOfDay(date: Date): Int {
+        return getCalendarOfDate(date)[Calendar.HOUR]
+    }
+
+    fun getHour(date: Date, isAmPm: Boolean): Int {
+        return if (isAmPm) {
+            getHourOfDay(date)
         } else {
-            return timeZone;
+            getHour(date)
         }
     }
 
-    public Calendar getCalendarOfDate(Date date) {
-        final Calendar calendar = Calendar.getInstance(getTimeZone());
-        calendar.setTime(date);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.SECOND, 0);
-        return calendar;
+    fun getMinuteOf(date: Date): Int {
+        return getCalendarOfDate(date)[Calendar.MINUTE]
     }
 
-    public int getHour(Date date) {
-        return getCalendarOfDate(date).get(Calendar.HOUR);
+    fun today(): Date {
+        val now = Calendar.getInstance(getTimeZone())
+        return now.time
     }
 
-    public int getHourOfDay(Date date) {
-        return getCalendarOfDate(date).get(Calendar.HOUR);
+    fun getMonth(date: Date): Int {
+        return getCalendarOfDate(date)[Calendar.MONTH]
     }
 
-    public int getHour(Date date, boolean isAmPm) {
-        if (isAmPm) {
-            return getHourOfDay(date);
-        } else {
-            return getHour(date);
+    fun getDay(date: Date): Int {
+        return getCalendarOfDate(date)[Calendar.DAY_OF_MONTH]
+    }
+
+    companion object {
+        @JvmStatic
+        fun compareDateIgnoreTime(first: Date, second: Date): Int {
+            val firstZeroTime = getZeroTimeDateWithoutTimeZone(first)
+            val secondZeroTime = getZeroTimeDateWithoutTimeZone(second)
+            return firstZeroTime.compareTo(secondZeroTime)
         }
-    }
 
-    public int getMinuteOf(Date date) {
-        return getCalendarOfDate(date).get(Calendar.MINUTE);
-    }
-
-    public Date today() {
-        Calendar now = Calendar.getInstance(getTimeZone());
-        return now.getTime();
-    }
-
-    public int getMonth(Date date) {
-        return getCalendarOfDate(date).get(Calendar.MONTH);
-    }
-
-    public int getDay(Date date) {
-        return getCalendarOfDate(date).get(Calendar.DAY_OF_MONTH);
-    }
-
-    public static int compareDateIgnoreTime(Date first, Date second) {
-        Date firstZeroTime = getZeroTimeDateWithoutTimeZone(first);
-        Date secondZeroTime = getZeroTimeDateWithoutTimeZone(second);
-        return firstZeroTime.compareTo(secondZeroTime);
-    }
-
-    private static Date getZeroTimeDateWithoutTimeZone(Date date) {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
+        private fun getZeroTimeDateWithoutTimeZone(date: Date): Date {
+            val calendar = Calendar.getInstance()
+            calendar.time = date
+            calendar[Calendar.HOUR_OF_DAY] = 0
+            calendar[Calendar.MINUTE] = 0
+            calendar[Calendar.SECOND] = 0
+            calendar[Calendar.MILLISECOND] = 0
+            return calendar.time
+        }
     }
 }
